@@ -1,7 +1,13 @@
+#pragma once
+
 class Room {
-public:
+private:
     int roomID;
-    int buildingID;
-    char roomName[20];
     int capacity;
+public:
+    Room(int ID, int cap);
+    Room();
+    ~Room();
+
+
 };

@@ -1,7 +1,21 @@
 #pragma once
+
+#include <string>
 #include "LabSection.h"
+
 class Lab{
+private:
     int labID;
-    char labName[30];
-    LabSection sections[10];
+    string labName;
+    vector<LabSection*> sections;
+public:
+    Lab();
+    Lab(int ID, string name);
+    ~Lab();
+
+    int getID();
+    void setID(int ID);
+
+    string getName();
+    void setName(string name);
 };

@@ -2,13 +2,26 @@
 #include "Instructor.h"
 #include "TA.h"
 #include "Room.h"
+#include <string>
 
 class LabSection {
-public:
+private:
     int labID;
-    char courseCode[20];
+    string courseCode;
     int sectionNumber;
-    Instructor instructor;
-    TA* tas;
-    Room room;
+    int teachingHours;
+    int leaves;
+    Instructor* instructor;
+    vector<TA*> tas;
+    Room* room;
+public:
+    LabSection();
+    LabSection(int ID,Room* room, string courseCode,Instructor* instr, vector<TA*> ta);
+    ~LabSection();
+
+    void addTA(TA* ta);
+    void assignRoom(Room* room);
+    void updateTeachingHours(int hrs);
+    void incrementLeaves();
+    void decrementLeaves();
 };
