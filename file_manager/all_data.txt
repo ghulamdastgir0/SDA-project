@@ -1,0 +1,87 @@
+=== Buildings ===
+101, Computer Science Block, 5001
+102, Electrical Engineering Wing, 5002
+103, Mechanical Workshop, 5003
+104, Civil Engineering Department, 5004
+105, Physics Research Center, 5005
+106, Chemistry Labs, 5006
+107, Biology & Genetics, 5007
+108, Mathematics Tower, 5008
+109, Business School, 5009
+110, Arts & Humanities, 5010
+
+=== Rooms ===
+1, CS-Lab-01, 40, 101
+2, CS-Lab-02, 40, 101
+3, CS-Server-Room, 15, 101
+4, CS-Networking-Lab, 35, 101
+5, CS-Project-Room, 25, 101
+6, EE-Circuits-Lab, 35, 102
+7, EE-Robotics-Lab, 30, 102
+8, EE-Controls-Lab, 40, 102
+9, EE-Power-Lab, 25, 102
+10, EE-Embedded-Lab, 30, 102
+11, ME-Machines-Shop, 50, 103
+12, ME-Thermo-Lab, 45, 103
+13, ME-Dynamics-Lab, 40, 103
+14, ME-Workshop-A, 35, 103
+15, ME-Workshop-B, 35, 103
+16, CE-Structures-Lab, 40, 104
+17, CE-Concrete-Lab, 35, 104
+18, CE-Soil-Testing-Lab, 35, 104
+19, CE-Environmental-Lab, 30, 104
+20, CE-Hydraulics-Lab, 30, 104
+21, PHY-Optics-Lab, 25, 105
+22, PHY-Quantum-Lab, 30, 105
+23, PHY-Laser-Lab, 20, 105
+24, PHY-SolidState-Lab, 30, 105
+25, PHY-Research-Hall, 50, 105
+26, CHM-Organic-Lab, 30, 106
+27, CHM-Inorganic-Lab, 30, 106
+28, CHM-Analytical-Lab, 35, 106
+29, CHM-BioChem-Lab, 40, 106
+30, CHM-Research-Lab, 20, 106
+31, BIO-Anatomy-Hall, 60, 107
+32, BIO-Genetics-Lab, 40, 107
+33, BIO-Microbiology-Lab, 35, 107
+34, BIO-Botany-Lab, 30, 107
+35, BIO-Research-Lab, 25, 107
+36, MATH-Seminar-Room, 100, 108
+37, MATH-Statistics-Lab, 40, 108
+38, MATH-Computer-Lab, 35, 108
+39, MATH-Tutorial-Room-A, 30, 108
+40, MATH-Tutorial-Room-B, 30, 108
+41, BIZ-CaseRoom-1, 50, 109
+42, BIZ-CaseRoom-2, 45, 109
+43, BIZ-Computer-Lab, 40, 109
+44, BIZ-Research-Room, 30, 109
+45, BIZ-Presentation-Hall, 80, 109
+46, ARTS-Studio-1, 40, 110
+47, ARTS-Studio-2, 35, 110
+48, ARTS-Media-Lab, 30, 110
+49, ARTS-Design-Lab, 25, 110
+50, ARTS-Exhibition-Hall, 70, 110
+
+=== Officers ===
+901, Dr. Sarah Connor, 101
+902, Mr. John Smith, 102
+903, Ms. Emily Davis, 103
+904, Dr. Alan Grant, 104
+905, Mr. Bruce Wayne, 105
+906, Ms. Diana Prince, 106
+907, Mr. Clark Kent, 107
+908, Dr. Emmett Brown, 108
+909, Ms. Ellen Ripley, 109
+910, Mr. Tony Stark, 110
+
+=== Attendants ===
+5001, Alice Johnson, 101
+5002, Bob Smith, 102
+5003, Charlie Lee, 103
+5004, Diana Ross, 104
+5005, Edward Kim, 105
+5006, Fiona Davis, 106
+5007, George Brown, 107
+5008, Hannah Wilson, 108
+5009, Ian Clark, 109
+5010, Julia Adams, 110

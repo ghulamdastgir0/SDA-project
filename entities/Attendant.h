@@ -5,15 +5,13 @@
 #include <string>
 #include "TimeSheet.h"
 
-using namespace std;
 
 class Attendant : public Person {
     private:
-        int m_buildingID;
+        int buildingID;
 
     public:
-        Attendant();
-        Attendant(int buildingID);
+        Attendant(char name[], int buildingID, int attendantID);
         ~Attendant();
 
         void setBuildingID(int id);

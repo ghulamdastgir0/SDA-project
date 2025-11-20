@@ -5,9 +5,11 @@
 using namespace std;
 
 class Person {
+    	int ID;
+		char name[100];
 public:
     Person();
-    Person(int id, const string &name, const string &email);
+    Person(int id, char name[100]);
     virtual ~Person();
 
     int getId() const;

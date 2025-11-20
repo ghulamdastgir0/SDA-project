@@ -11,8 +11,6 @@ using namespace std;
 
 class AcademicOfficer : public Person {
 	private:
-		int ID;
-		char name[100];
 		int managedBuilding;
 	public:
 		AcademicOfficer(int id, int buildingID);
@@ -26,9 +24,7 @@ class AcademicOfficer : public Person {
 		void rejectRequest(int requestId);
 };
 
-AcademicOfficer(int id, const char name[100], int buildingID){
-	this->ID = id;
-	strcpy(this->name, name);
+AcademicOfficer(int buildingID){
 	this->managedBuilding = buildingID;
 }
 

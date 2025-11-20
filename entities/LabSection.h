@@ -11,12 +11,12 @@ private:
     int sectionNumber;
     int teachingHours;
     int leaves;
-    Instructor* instructor;
-    vector<TA*> tas;
-    Room* room;
+    int instructorID;
+    vector<int> tas;
+    int room;
 public:
     LabSection();
-    LabSection(int ID,Room* room, string courseCode,Instructor* instr, vector<TA*> ta);
+    LabSection(int ID,int room, string courseCode,int instructorID, int sectionNumber, vector<int> ta);
     ~LabSection();
 
     void addTA(TA* ta);
