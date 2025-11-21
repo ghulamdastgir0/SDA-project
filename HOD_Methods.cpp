@@ -16,6 +16,10 @@ HeadOfDepartment::~HeadOfDepartment() {
     // cleanup if needed
 }
 
+vector<int> HeadOfDepartment::getManagedLabIds() const {
+    return managedLabIds;
+}
+
 vector<Schedule> HeadOfDepartment::getCompleteWeeklySchedule(int weekNumber) const {
     // Return empty vector for now; real implementation should query the system
     cout << "HOD: getCompleteWeeklySchedule(" << weekNumber << ") called." << endl;

@@ -18,8 +18,20 @@ Building::Building(int ID, const string& name, int attID)
 
 Building::~Building()
 {
-    // Do not delete Room* pointers here — ownership not specified.
+    // unique_ptr will automatically delete rooms
     rooms.clear();
+}
+
+void Building::addRoom(unique_ptr<Room> room) {
+    rooms.push_back(move(room));
+}
+
+const vector<unique_ptr<Room>>& Building::getRooms() const {
+    return rooms;
+}
+
+int Building::getRoomCount() const {
+    return rooms.size();
 }
 
 int Building::getID() {
@@ -28,6 +40,14 @@ int Building::getID() {
 
 void Building::setID(int ID) {
     buildingID = ID;
+}
+
+string Building::getName() const {
+    return buildingName;
+}
+
+int Building::getAttendantID() const {
+    return attendantID;
 }
 
 Attendant* Building::getAttendant() {

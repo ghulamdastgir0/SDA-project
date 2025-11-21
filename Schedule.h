@@ -1,18 +1,26 @@
 #pragma once
 #include "Time.h"
+#include <memory>
+#include <vector>
+using namespace std;
+
 class Schedule {
 private:
-    static int scheduleID;
-    int labID;
+    int labSectionID;
     int dayOfWeek;
     bool isMakeup;
     Timing time;
 public:
-    Schedule(int labID, int dayOfWeek, int weekNo,
-            int startHr, int EndHr, int startMin, int endMin);
+    Schedule(int labSectionID, int dayOfWeek, int startHr, int endHr, int startMin, int endMin);
     Schedule();
     ~Schedule();
 
-    void changeSchedule(int labID, int dayOfWeek, int weekNo,
-    int startHr, int EndHr, int startMin, int endMin);
+    void changeSchedule(int labSectionID, int dayOfWeek,
+        int startHr, int endHr, int startMin, int endMin);
+    
+    int getLabSectionID() const;
+    int getDayOfWeek() const;
+    bool getIsMakeup() const;
+    const Timing& getTiming() const;
+    void setIsMakeup(bool makeup);
 };

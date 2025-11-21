@@ -10,6 +10,11 @@ AcademicOfficer::AcademicOfficer(int id, string name, int buildingID)
     cout << "AcademicOfficer '" << name << "' created for Building ID: " << buildingID << endl;
 }
 
+// Get the managed building ID
+int AcademicOfficer::getManagedBuilding() const {
+    return managedBuilding;
+}
+
 // Add a schedule entry
 void AcademicOfficer::addScheduleEntry(const Schedule &entry) {
     cout << "AcademicOfficer " << getName() << " adding schedule entry." << endl;

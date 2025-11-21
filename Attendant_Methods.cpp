@@ -10,7 +10,7 @@ Attendant::Attendant(string name, int buildingID, int attendantID)
 }
 
 Attendant::~Attendant() {
-    cout << "Attendant with ID " << getId() << " destroyed." << endl;
+    
 }
 
 void Attendant::setBuildingID(int id) {

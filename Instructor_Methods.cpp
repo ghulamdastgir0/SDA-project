@@ -1,14 +1,14 @@
 #include "Instructor.h"
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
- Instructor::Instructor(int id, const string &name, const vector<int> &managedLabSectionIDs)
-        : Person(id, name)
-    {
-        managedLabIds = managedLabSectionIDs;
-        cout << "Instructor '" << name << "' (ID=" << id << ") initialized with " << managedLabIds.size() << " assigned lab sections." << endl;
-    }
+Instructor::Instructor(int id, const string &name, const vector<int> &managedLabSectionIDs)
+    : Person(id, name), managedLabIds(managedLabSectionIDs)
+{
+    cout << "Instructor '" << name << "' (ID=" << id << ") initialized with " << managedLabIds.size() << " assigned lab IDs." << endl;
+}
 
 Instructor::~Instructor() {
     // clean up requests if owned
@@ -19,26 +19,25 @@ Instructor::~Instructor() {
     requests.clear();
 }
 
-void Instructor::assignLab(LabSection &section) {
-    // store pointer to the lab section
-    assignedLabs.push_back(&section);
-    cout << "Instructor " << getName() << " assigned to lab section at " << &section << "\n";
+void Instructor::assignLab(int labId) {
+    // store the lab ID
+    managedLabIds.push_back(labId);
+    cout << "Instructor " << getName() << " assigned to lab ID: " << labId << "\n";
 }
 
-void Instructor::removeAssignedLab(int labId, int sectionNumber) {
-    // No direct way to match labId/sectionNumber (LabSection has no public getters here).
-    // For now remove the first assigned lab if any and log action.
-    if (!assignedLabs.empty()) {
-        LabSection* ls = assignedLabs.back();
-        assignedLabs.pop_back();
-        cout << "Instructor " << getName() << " removed assigned lab section at " << ls << "\n";
+void Instructor::removeAssignedLab(int labId) {
+    // Find and remove the lab ID from the vector
+    auto it = find(managedLabIds.begin(), managedLabIds.end(), labId);
+    if (it != managedLabIds.end()) {
+        managedLabIds.erase(it);
+        cout << "Instructor " << getName() << " removed lab ID: " << labId << "\n";
     } else {
-        cout << "Instructor " << getName() << " has no assigned labs to remove." << endl;
+        cout << "Instructor " << getName() << " is not assigned to lab ID " << labId << "." << endl;
     }
 }
 
-vector<LabSection*> Instructor::getAssignedLabs() {
-    return assignedLabs;
+vector<int> Instructor::getAssignedLabIds() const {
+    return managedLabIds;
 }
 
 int Instructor::createMakeupRequest(int labId, int weekNumber, const string &reason) {

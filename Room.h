@@ -12,4 +12,9 @@ private:
 public:
     Room(int ID, int cap, const string& number, int bID);
     ~Room();
+
+    int getID() const;
+    int getCapacity() const;
+    string getRoomNumber() const;
+    int getBuildingID() const;
 };

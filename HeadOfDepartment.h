@@ -21,6 +21,8 @@ public:
     HeadOfDepartment(int id, const string &name, const vector<int> &assignedLabSectionIDs);
     ~HeadOfDepartment();
 
+    vector<int> getManagedLabIds() const;
+
     // Legacy data-access style (direct retrieval)
     vector<Schedule> getCompleteWeeklySchedule(int weekNumber) const;
     vector<TimeSheet> getFilledTimeSheetsForWeek(int weekNumber) const;

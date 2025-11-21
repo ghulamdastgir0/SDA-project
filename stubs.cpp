@@ -16,5 +16,4 @@
 
 // Initialize static members
 int InstructorRequest::requestID = 0;
-int Schedule::scheduleID = 0;
 int TimeSheet::timesheetID = 0;

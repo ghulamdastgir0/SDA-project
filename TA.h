@@ -3,19 +3,18 @@
 #include "Person.h"
 #include <vector>
 #include <string>
-#include "LabSection.h"
 
 using namespace std;
 
 class TA : public Person {
 public:
-    TA();
+    TA(int id, const string &name, const vector<int> &assignedLabSectionIDs);
     ~TA();
 
-    void assignToLab(const LabSection &section);
+    void assignToLab(const int &section);
     void removeFromLab(int labId, int sectionNumber);
-    const vector<LabSection> &getAssignedLabs() const;
+    const vector<int> &getAssignedLabs() const;
 
 private:
-    vector<LabSection> m_assignedLabs;
+    vector<int> m_assignedLabs;
 };

@@ -4,24 +4,46 @@
 using namespace std;
 
 Schedule::Schedule() 
-    : labID(0), dayOfWeek(0), isMakeup(false), time()
+    : labSectionID(0), dayOfWeek(0), isMakeup(false), time()
 {
     cout << "Schedule created (default)." << endl;
 }
 
-Schedule::Schedule(int lab, int day, int weekNo, int startHr, int endHr, int startMin, int endMin)
-    : labID(lab), dayOfWeek(day), isMakeup(false), time(startHr, startMin, endHr, endMin)
+Schedule::Schedule(int labSecID, int day, int startHr, int endHr, int startMin, int endMin)
+    : labSectionID(labSecID), dayOfWeek(day), isMakeup(false), time(startHr, startMin, endHr, endMin)
 {
-    cout << "Schedule created for Lab " << lab << " on day " << day << endl;
+    cout << "Schedule created for LabSection " << labSecID << " on day " << day 
+         << " (" << startHr <<":" << startMin << " - " << endHr << ":" << endMin << ")" << endl;
 }
 
 Schedule::~Schedule() {
-    cout << "Schedule (Lab ID: " << labID << ") destroyed." << endl;
+    // Nothing to free
 }
 
-void Schedule::changeSchedule(int labID, int dayOfWeek, int weekNo,
-    int startHr, int EndHr, int startMin, int endMin) {
-    cout << "Schedule changed for Lab " << labID << endl;
+void Schedule::changeSchedule(int labSecID, int day, int startHr, int endHr, int startMin, int endMin) {
+    labSectionID = labSecID;
+    dayOfWeek = day;
     time.setStartTime(startHr, startMin);
-    time.setEndTime(EndHr, endMin);
+    time.setEndTime(endHr, endMin);
+    cout << "Schedule changed for LabSection " << labSectionID << endl;
+}
+
+int Schedule::getLabSectionID() const {
+    return labSectionID;
+}
+
+int Schedule::getDayOfWeek() const {
+    return dayOfWeek;
+}
+
+bool Schedule::getIsMakeup() const {
+    return isMakeup;
+}
+
+const Timing& Schedule::getTiming() const {
+    return time;
+}
+
+void Schedule::setIsMakeup(bool makeup) {
+    isMakeup = makeup;
 }

@@ -15,6 +15,8 @@ class AcademicOfficer : public Person {
 	public:
 		AcademicOfficer(int id, string name, int buildingID);
 
+		int getManagedBuilding() const;
+
 		void addScheduleEntry(const Schedule &entry);
 		void modifyScheduleEntry(int scheduleId, const Schedule &entry);
 		void removeScheduleEntry(int scheduleId);

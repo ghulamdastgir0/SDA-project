@@ -10,20 +10,19 @@ class LabSection;
 using namespace std;
 
 class Instructor : public Person {
-    vector<int> managedLabIds;
 public:
     // Construct with id, name and list of managed lab section IDs
     Instructor(int id, const string &name, const vector<int> &managedLabSectionIDs);
     ~Instructor();
 
-    void assignLab(LabSection &section);
-    void removeAssignedLab(int labId, int sectionNumber);
-    vector<LabSection*> getAssignedLabs();
+    void assignLab(int labId);
+    void removeAssignedLab(int labId);
+    vector<int> getAssignedLabIds() const;
 
     int createMakeupRequest(int labId, int weekNumber, const string &reason);
     vector<InstructorRequest*> getRequests();
 
 private:
-    vector<LabSection*> assignedLabs;
+    vector<int> managedLabIds;
     vector<InstructorRequest*> requests;
 };

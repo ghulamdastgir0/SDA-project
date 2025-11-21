@@ -66,6 +66,56 @@ public:
 
     void run(){ cout<<"running"<<endl; };
 
+    //reading buildings.dat
+    void loadBuildingsFromFile();
+    void writeBuildingsToFile();
+    void printBuildings() const;
+
+    //reading academic_officers.dat
+    void loadAcademicOfficersFromFile();
+    void writeAcademicOfficersToFile();
+    void printAcademicOfficers() const;
+
+    //reading attendants.dat
+    void loadAttendantsFromFile();
+    void writeAttendantsToFile();
+    void printAttendants() const;
+
+    //reading hods.dat
+    void loadHODsFromFile();
+    void writeHODsToFile();
+    void printHODs() const;
+
+    //reading tas.dat
+    void loadTAsFromFile();
+    void writeTAsToFile();
+    void printTAs() const;
+
+    //reading instructors.dat
+    void loadInstructorsFromFile();
+    void writeInstructorsToFile();
+    void printInstructors() const;
+
+    //reading rooms.dat
+    void loadRoomsFromFile();
+    void writeRoomsToFile();
+    void printRooms() const;
+
+    //reading labs.dat
+    void loadLabsFromFile();
+    void writeLabsToFile();
+    void printLabs() const;
+
+    //reading lab_sections.dat
+    void loadLabSectionsFromFile();
+    void writeLabSectionsToFile();
+    void printLabSections() const;
+
+    //reading schedules.dat
+    void loadSchedulesFromFile();
+    void writeSchedulesToFile();
+    void printSchedules() const;
+
 private:
     // Owned collections
     vector<unique_ptr<AcademicOfficer>> m_academicOfficers;
@@ -80,6 +130,8 @@ private:
     vector<unique_ptr<Schedule>> m_schedules;
     vector<unique_ptr<TimeSheet>> m_timeSheets;
     vector<unique_ptr<InstructorRequest>> m_requests;
+    
+    // Rooms are owned by buildings, not stored separately here
 
     // Helper lookups (optional) - kept as raw pointers to objects owned above
     AcademicOfficer* findAcademicOfficerById(int id) const;
