@@ -106,8 +106,7 @@ TAID , Name , AssignedLabSectionIDs
 
 === HOD ===
 ID , Name , AssignedLabSectionIDs
-100 , Dr. Rebecca Stone , [201,202,203,204,205,301,302]
-101 , Dr. SaifUllah , [401,402,501,502,601,602,701,702]
+101 , Dr. SaifUllah , [201,202,203,204,205,301,302,401,402,501,502,601,602,701,702]
 
 === Instructors ===
 ID , Name , AssignedLabSectionIDs

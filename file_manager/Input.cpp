@@ -3,92 +3,64 @@
 #include <vector>
 using namespace std;
 
-class TA {
+class LabSchedule {
 public:
-    int TAID;
-    string Name;
-    vector<int> AssignedLabSectionIDs;
+    int LabSectionID;
+    int DayOfWeek;
+    int StartHr;
+    int EndHr;
+    int StartMin;
+    int EndMin;
 
     void write(fstream &file) {
-        file.write((char*)&TAID, sizeof(TAID));
-
-        int len = Name.size();
-        file.write((char*)&len, sizeof(len));
-        file.write(Name.c_str(), len);
-
-        int count = AssignedLabSectionIDs.size();
-        file.write((char*)&count, sizeof(count));
-        for (int id : AssignedLabSectionIDs)
-            file.write((char*)&id, sizeof(id));
+        file.write((char*)&LabSectionID, sizeof(LabSectionID));
+        file.write((char*)&DayOfWeek, sizeof(DayOfWeek));
+        file.write((char*)&StartHr, sizeof(StartHr));
+        file.write((char*)&EndHr, sizeof(EndHr));
+        file.write((char*)&StartMin, sizeof(StartMin));
+        file.write((char*)&EndMin, sizeof(EndMin));
     }
 
     void read(fstream &file) {
-        file.read((char*)&TAID, sizeof(TAID));
-
-        int len;
-        file.read((char*)&len, sizeof(len));
-        Name.resize(len);
-        file.read(&Name[0], len);
-
-        int count;
-        file.read((char*)&count, sizeof(count));
-        AssignedLabSectionIDs.resize(count);
-        for (int i = 0; i < count; i++)
-            file.read((char*)&AssignedLabSectionIDs[i], sizeof(int));
+        file.read((char*)&LabSectionID, sizeof(LabSectionID));
+        file.read((char*)&DayOfWeek, sizeof(DayOfWeek));
+        file.read((char*)&StartHr, sizeof(StartHr));
+        file.read((char*)&EndHr, sizeof(EndHr));
+        file.read((char*)&StartMin, sizeof(StartMin));
+        file.read((char*)&EndMin, sizeof(EndMin));
     }
 
     void print() {
-        cout << TAID << " , " << Name << " , [";
-        for (int i = 0; i < AssignedLabSectionIDs.size(); i++) {
-            cout << AssignedLabSectionIDs[i];
-            if (i + 1 < AssignedLabSectionIDs.size()) cout << ",";
-        }
-        cout << "]\n";
+        cout << LabSectionID << " , "
+             << DayOfWeek << " , "
+             << StartHr << " , "
+             << EndHr << " , "
+             << StartMin << " , "
+             << EndMin << endl;
     }
 };
 
 int main() {
-    vector<TA> list = {
-        {4001, "Alex Martin", {2001,2002}},
-        {4002, "Brian Lopez", {2003}},
-        {4003, "Chloe Kim", {2004}},
-        {4004, "David Green", {2005}},
-        {4005, "Ella Foster", {2006}},
-        {4006, "Frank Turner", {2007}},
-        {4007, "Grace Lee", {2008}},
-        {4008, "Harry Patel", {2009,2010}},
-        {4009, "Rayan Ahmed", {3001,3002}},
-        {4010, "Liam Hughes", {4001,4002}},
-        {4011, "Dawood Shahzad", {5001,5002,5003}},
-        {4012, "Quinn Delgado", {6001}},
-        {4013, "Ruby Chen", {6002}},
-        {4014, "Steven Young", {7001}},
-        {4015, "Tara Mitchell", {7002}}
+
+    vector<LabSchedule> schedules = {
+        {2001,1,9,11,0,0},{2002,1,11,13,0,0},{2003,1,13,15,0,0},{2004,1,15,17,0,0},
+        {2005,1,17,19,0,0},{2006,1,19,21,0,0},{2007,1,8,10,0,0},{2008,1,10,12,0,0},
+        {2009,1,12,14,0,0},{2010,1,14,16,0,0},{3001,2,9,11,0,0},{3002,2,11,13,0,0},
+        {4001,3,9,11,0,0},{4002,3,11,13,0,0},{5001,4,9,11,0,0},{5002,4,11,13,0,0},
+        {5003,4,13,15,0,0},{6001,5,9,11,0,0},{6002,5,11,13,0,0},{7001,6,9,11,0,0},
+        {7002,6,11,13,0,0}
     };
 
-    fstream file("../data/ta.dat", ios::out | ios::binary);
-    for (auto &t : list) t.write(file);
-    file.close();
+    fstream out("../data/labschedule.dat", ios::out | ios::binary);
+    for (auto &s : schedules) s.write(out);
+    out.close();
 
-    fstream in("../data/ta.dat", ios::in | ios::binary);
-
-    while (true) {
-        TA t;
-        if (!in.read((char*)&t.TAID, sizeof(t.TAID))) break;
-
-        int len;
-        in.read((char*)&len, sizeof(len));
-        t.Name.resize(len);
-        in.read(&t.Name[0], len);
-
-        int count;
-        in.read((char*)&count, sizeof(count));
-        t.AssignedLabSectionIDs.resize(count);
-        for (int i = 0; i < count; i++)
-            in.read((char*)&t.AssignedLabSectionIDs[i], sizeof(int));
-
-        t.print();
+    fstream in("../data/labschedule.dat", ios::in | ios::binary);
+    while (in.peek() != EOF) {
+        LabSchedule s;
+        s.read(in);
+        if (!in) break;
+        s.print();
     }
-
     in.close();
 }
