@@ -5,11 +5,10 @@
 using namespace std;
 
 class Person {
-    int ID;
-    char name[100];
+    int m_id;
+    string m_name;
 public:
-    Person();
-    Person(int id, char name[100]);
+    Person(int id, string name);
     virtual ~Person();
 
     int getId() const;
@@ -18,12 +17,5 @@ public:
     const string &getName() const;
     void setName(const string &name);
 
-    const string &getEmail() const;
-    void setEmail(const string &email);
 
-
-private:
-    int m_id;
-    string m_name;
-    string m_email;
 };

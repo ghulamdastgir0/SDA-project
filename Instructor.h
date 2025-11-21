@@ -10,8 +10,10 @@ class LabSection;
 using namespace std;
 
 class Instructor : public Person {
+    vector<int> managedLabIds;
 public:
-    Instructor();
+    // Construct with id, name and list of managed lab section IDs
+    Instructor(int id, const string &name, const vector<int> &managedLabSectionIDs);
     ~Instructor();
 
     void assignLab(LabSection &section);

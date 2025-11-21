@@ -6,16 +6,18 @@
 class Lab{
 private:
     int labID;
-    char labCode[50];
+    string labCode;
     string labName;
     vector<LabSection> sections;
 public:
-    Lab();
-    Lab(int ID,string code, string name);
+    Lab(int ID, string code, string name, vector<LabSection> sections);
     ~Lab();
 
     int getID();
     void setID(int ID);
+
+    string getCode();
+    void setCode(string code);
 
     string getName();
     void setName(string name);

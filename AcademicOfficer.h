@@ -13,7 +13,7 @@ class AcademicOfficer : public Person {
 	private:
 		int managedBuilding;
 	public:
-		AcademicOfficer(int id, int buildingID);
+		AcademicOfficer(int id, string name, int buildingID);
 
 		void addScheduleEntry(const Schedule &entry);
 		void modifyScheduleEntry(int scheduleId, const Schedule &entry);
@@ -23,11 +23,3 @@ class AcademicOfficer : public Person {
 		void approveRequest(int requestId);
 		void rejectRequest(int requestId);
 };
-
-AcademicOfficer(int buildingID){
-	this->managedBuilding = buildingID;
-}
-
-void addScheduleEntry(const Schedule &entry){
-	
-}

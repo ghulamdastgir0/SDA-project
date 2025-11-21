@@ -13,7 +13,6 @@ private:
 public:
     TimeSheet(int labID, int dayOfWeek, int weekNo,
             int startHr, int EndHr, int startMin, int endMin);
-    TimeSheet();
     ~TimeSheet();
 
     void setTime(int startHr, int EndHr, int startMin, int endMin);

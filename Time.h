@@ -1,7 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <iomanip>
+#include <string>
 
 class Timing {
 private:
@@ -9,60 +8,23 @@ private:
     int endHour, endMin;
 
 public:
-    Timing() : startHour(0), startMin(0), endHour(0), endMin(0) {}
+    Timing(int sh, int sm, int eh, int em);
 
-    Timing(int sh, int sm, int eh, int em) {
-        setStartTime(sh, sm);
-        setEndTime(eh, em);
-    }
+    void setStartTime(int h, int m);
+    void setEndTime(int h, int m);
 
-    void setStartTime(int h, int m) {
-        if (h >= 0 && h < 24 && m >= 0 && m < 60) {
-            startHour = h;
-            startMin = m;
-        } else {
-            std::cout << "Invalid start time!\n";
-        }
-    }
+    int getStartHour() const;
+    int getStartMin() const;
+    int getEndHour() const;
+    int getEndMin() const;
 
-    void setEndTime(int h, int m) {
-        if (h >= 0 && h < 24 && m >= 0 && m < 60) {
-            endHour = h;
-            endMin = m;
-        } else {
-            std::cout << "Invalid end time!\n";
-        }
-    }
+    int startInMinutes() const;
+    int endInMinutes() const;
 
-    int getStartHour() const { return startHour; }
-    int getStartMin() const { return startMin; }
-    int getEndHour() const { return endHour; }
-    int getEndMin() const { return endMin; }
+    int getDuration() const;
 
-    int startInMinutes() const { return startHour * 60 + startMin; }
-    int endInMinutes() const { return endHour * 60 + endMin; }
+    bool equals(const Timing& t) const;
+    bool overlaps(const Timing& t) const;
 
-    int getDuration() const {
-        return endInMinutes() - startInMinutes();
-    }
-
-    bool equals(const Timing& t) const {
-        return startHour == t.startHour &&
-               startMin == t.startMin &&
-               endHour == t.endHour &&
-               endMin == t.endMin;
-    }
-
-    bool overlaps(const Timing& t) const {
-        return !(endInMinutes() <= t.startInMinutes() ||
-                 t.endInMinutes() <= startInMinutes());
-    }
-
-    void print() const {
-        cout << setfill('0')
-                  << setw(2) << startHour << ":"
-                  << setw(2) << startMin  << " - "
-                  << setw(2) << endHour << ":"
-                  << setw(2) << endMin  << "\n";
-    }
+    void print() const;
 };

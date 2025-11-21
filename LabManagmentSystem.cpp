@@ -1,4 +1,4 @@
-#include "entities/LabManagementSystem.h"
+#include "LabManagementSystem.h"
 
 using namespace std;
 

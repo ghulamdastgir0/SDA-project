@@ -15,8 +15,10 @@
 using namespace std;
 
 class HeadOfDepartment : public Person {
+    vector<int> managedLabIds;
 public:
-    HeadOfDepartment();
+    // Construct with id, name and assigned lab section IDs
+    HeadOfDepartment(int id, const string &name, const vector<int> &assignedLabSectionIDs);
     ~HeadOfDepartment();
 
     // Legacy data-access style (direct retrieval)

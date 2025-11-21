@@ -6,12 +6,12 @@
 class Building {
 private:
     int buildingID;
-    char buildingName[100];
+    string buildingName;
     int attendantID;
     vector<Room*> rooms;
 public:
     Building();
-    Building(int ID, const char name[100], int attID);
+    Building(int ID, const string& name, int attID);
     ~Building();
 
     int getID();

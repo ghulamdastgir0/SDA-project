@@ -4,11 +4,10 @@ class Room {
 private:
     int roomID;
     int capacity;
-    char roomNumber[10];
+    string roomNumber;
     int buildingID;
 public:
-    Room(int ID, int cap, const char number[10], int bID);
-    Room();
+    Room(int ID, int cap, const string& number, int bID);
     ~Room();
 
 

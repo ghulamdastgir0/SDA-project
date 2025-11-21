@@ -11,7 +11,7 @@ class Attendant : public Person {
         int buildingID;
 
     public:
-        Attendant(char name[], int buildingID, int attendantID);
+        Attendant(string name, int buildingID, int attendantID);
         ~Attendant();
 
         void setBuildingID(int id);

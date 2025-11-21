@@ -10,11 +10,11 @@ private:
     int labID;
     int instructorID;
     int weekNumber;
-    char reason[100];
+    string reason;
     bool isApproved;
 public:
     InstructorRequest();
-    InstructorRequest(int labID, int instID, int weekNo, char Reason[100]);
+    InstructorRequest(int labID, int instID, int weekNo, string Reason);
     ~InstructorRequest();
 
     void ApproveRequest();
