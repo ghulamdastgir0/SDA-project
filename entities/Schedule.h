@@ -5,7 +5,7 @@ private:
     static int scheduleID;
     int labID;
     int dayOfWeek;
-    int weekNo;
+    bool isMakeup;
     Timing time;
 public:
     Schedule(int labID, int dayOfWeek, int weekNo,

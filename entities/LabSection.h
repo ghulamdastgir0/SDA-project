@@ -8,7 +8,6 @@ class LabSection {
 private:
     int labID;
     string courseCode;
-    int sectionNumber;
     int teachingHours;
     int leaves;
     int instructorID;

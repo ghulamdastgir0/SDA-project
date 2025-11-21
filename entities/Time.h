@@ -59,10 +59,10 @@ public:
     }
 
     void print() const {
-        std::cout << std::setfill('0')
-                  << std::setw(2) << startHour << ":"
-                  << std::setw(2) << startMin  << " - "
-                  << std::setw(2) << endHour << ":"
-                  << std::setw(2) << endMin  << "\n";
+        cout << setfill('0')
+                  << setw(2) << startHour << ":"
+                  << setw(2) << startMin  << " - "
+                  << setw(2) << endHour << ":"
+                  << setw(2) << endMin  << "\n";
     }
 };

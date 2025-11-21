@@ -5,8 +5,8 @@
 using namespace std;
 
 class Person {
-    	int ID;
-		char name[100];
+    int ID;
+    char name[100];
 public:
     Person();
     Person(int id, char name[100]);

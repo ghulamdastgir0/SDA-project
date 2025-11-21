@@ -6,11 +6,12 @@
 class Lab{
 private:
     int labID;
+    char labCode[50];
     string labName;
-    vector<LabSection*> sections;
+    vector<LabSection> sections;
 public:
     Lab();
-    Lab(int ID, string name);
+    Lab(int ID,string code, string name);
     ~Lab();
 
     int getID();
