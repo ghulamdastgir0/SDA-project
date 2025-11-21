@@ -12,25 +12,9 @@
 #include "Request.h"
 
 // Provide minimal destructor implementations and define static members
+// Note: Most destructors are now implemented in their respective *_Methods.cpp files
 
-Person::~Person() {}
-
-AcademicOfficer::~AcademicOfficer() {}
-Attendant::~Attendant() {}
-Instructor::~Instructor() {}
-TA::~TA() {}
-HeadOfDepartment::~HeadOfDepartment() {}
-
-Building::~Building() {}
-Lab::~Lab() {}
-LabSection::~LabSection() {}
-Room::~Room() {}
-
-Schedule::~Schedule() {}
-TimeSheet::~TimeSheet() {}
-InstructorRequest::~InstructorRequest() {}
-
-// Define static counters (single definition)
-int Schedule::scheduleID = 0;
+// Initialize static members
 int InstructorRequest::requestID = 0;
+int Schedule::scheduleID = 0;
 int TimeSheet::timesheetID = 0;

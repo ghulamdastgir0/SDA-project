@@ -19,4 +19,5 @@ public:
 
     void ApproveRequest();
     void viewRequestDetails();
+    int getInstructorId() const { return instructorID; }
 };

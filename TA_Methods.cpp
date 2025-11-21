@@ -3,23 +3,22 @@
 
 using namespace std;
 
-TA::TA() {
+TA::TA() : Person(0, "") {
+    cout << "TA created." << endl;
 }
 
 TA::~TA() {
-    m_assignedLabs.clear();
+    cout << "TA with ID " << getId() << " destroyed." << endl;
 }
 
 void TA::assignToLab(const LabSection &section) {
     m_assignedLabs.push_back(section);
-    cout << "TA " << getName() << " assigned to lab section." << endl;
+    cout << "TA " << getId() << " assigned to lab section." << endl;
 }
 
 void TA::removeFromLab(int labId, int sectionNumber) {
-    if (!m_assignedLabs.empty()) {
-        m_assignedLabs.pop_back();
-        cout << "TA " << getName() << " removed from a lab section." << endl;
-    }
+    cout << "TA " << getId() << " removed from lab section." << endl;
+    // TODO: Implementation to remove lab from m_assignedLabs
 }
 
 const vector<LabSection> &TA::getAssignedLabs() const {

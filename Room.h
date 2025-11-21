@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+using namespace std;
+
 class Room {
 private:
     int roomID;
@@ -9,6 +12,4 @@ private:
 public:
     Room(int ID, int cap, const string& number, int bID);
     ~Room();
-
-
 };

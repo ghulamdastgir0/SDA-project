@@ -8,6 +8,7 @@ private:
     int endHour, endMin;
 
 public:
+    Timing();
     Timing(int sh, int sm, int eh, int em);
 
     void setStartTime(int h, int m);

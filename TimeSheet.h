@@ -1,6 +1,6 @@
+#pragma once
 #include "Time.h"
 
-#pragma once
 class TimeSheet {
 private:
     static int timesheetID;
@@ -11,6 +11,7 @@ private:
     Timing time;
 
 public:
+    TimeSheet();
     TimeSheet(int labID, int dayOfWeek, int weekNo,
             int startHr, int EndHr, int startMin, int endMin);
     ~TimeSheet();

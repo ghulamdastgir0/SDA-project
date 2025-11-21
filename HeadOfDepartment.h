@@ -38,7 +38,4 @@ public:
     void generateWeeklyScheduleReport(int weekNumber);
     void generateWeeklyTimesheetReport(int weekNumber);
     void generateLabSessionReport(int labId);
-
-private:
-    vector<int> managedLabIds;
 };

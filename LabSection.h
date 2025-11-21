@@ -1,8 +1,10 @@
 #pragma once
 #include "Instructor.h"
-#include "TA.h"
 #include "Room.h"
 #include <string>
+#include <vector>
+
+class TA;  // Forward declaration
 
 class LabSection {
 private:
@@ -15,7 +17,7 @@ private:
     int room;
 public:
     LabSection();
-    LabSection(int ID,int room, string courseCode,int instructorID, int sectionNumber, vector<int> ta);
+    LabSection(int ID, int room, string courseCode, int instructorID, int sectionNumber, vector<int> ta);
     ~LabSection();
 
     void addTA(TA* ta);

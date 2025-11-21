@@ -40,7 +40,8 @@ public:
     }
 };
 
-int main() {
+/*
+//int main() {
 
     vector<LabSchedule> schedules = {
         {2001,1,9,11,0,0},{2002,1,11,13,0,0},{2003,1,13,15,0,0},{2004,1,15,17,0,0},
@@ -63,4 +64,6 @@ int main() {
         s.print();
     }
     in.close();
+// commented out main function
 }
+*/

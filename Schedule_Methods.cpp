@@ -3,26 +3,25 @@
 
 using namespace std;
 
-Schedule::Schedule()
+Schedule::Schedule() 
     : labID(0), dayOfWeek(0), isMakeup(false), time()
 {
+    cout << "Schedule created (default)." << endl;
 }
 
-Schedule::Schedule(int lab, int day, int weekNo, int startHr, int EndHr, int startMin, int endMin)
-    : labID(lab), dayOfWeek(day), isMakeup(false), time()
+Schedule::Schedule(int lab, int day, int weekNo, int startHr, int endHr, int startMin, int endMin)
+    : labID(lab), dayOfWeek(day), isMakeup(false), time(startHr, startMin, endHr, endMin)
 {
-    time.setStartTime(startHr, startMin);
-    time.setEndTime(EndHr, endMin);
-    cout << "Schedule created for lab " << labID << " day " << dayOfWeek << "\n";
+    cout << "Schedule created for Lab " << lab << " on day " << day << endl;
 }
 
 Schedule::~Schedule() {
+    cout << "Schedule (Lab ID: " << labID << ") destroyed." << endl;
 }
 
-void Schedule::changeSchedule(int lab, int day, int weekNo, int startHr, int EndHr, int startMin, int endMin) {
-    labID = lab;
-    dayOfWeek = day;
+void Schedule::changeSchedule(int labID, int dayOfWeek, int weekNo,
+    int startHr, int EndHr, int startMin, int endMin) {
+    cout << "Schedule changed for Lab " << labID << endl;
     time.setStartTime(startHr, startMin);
     time.setEndTime(EndHr, endMin);
-    cout << "Schedule changed for lab " << labID << " to day " << dayOfWeek << "\n";
 }
