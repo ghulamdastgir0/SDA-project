@@ -85,3 +85,115 @@
 5008, Hannah Wilson, 108
 5009, Ian Clark, 109
 5010, Julia Adams, 110
+
+=== TAs ===
+TAID , Name , AssignedLabSectionIDs
+4001 , Alex Martin , [2001,2002]
+4002 , Brian Lopez , [2003]
+4003 , Chloe Kim , [2004]
+4004 , David Green , [2005]
+4005 , Ella Foster , [2006]
+4006 , Frank Turner , [2007]
+4007 , Grace Lee , [2008]
+4008 , Harry Patel , [2009,2010]
+4009 , Rayan Ahmed , [3001,3002]
+4010 , Liam Hughes , [4001,4002]
+4011 , Dawood Shahzad , [5001,5002,5003]
+4012 , Quinn Delgado , [6001]
+4013 , Ruby Chen , [6002]
+4014 , Steven Young , [7001]
+4015 , Tara Mitchell , [7002]
+
+=== HOD ===
+ID , Name , AssignedLabSectionIDs
+100 , Dr. Rebecca Stone , [201,202,203,204,205,301,302]
+101 , Dr. SaifUllah , [401,402,501,502,601,602,701,702]
+
+=== Instructors ===
+ID , Name , AssignedLabSectionIDs
+3001 , Prof. Henry Walker , [2001]
+3002 , Prof. Laura Bennett , [2002]
+3003 , Prof. Michael Carter , [2003]
+3004 , Prof. Susan Lee , [2004]
+3005 , Prof. Daniel Brooks , [2005]
+3006 , Prof. Olivia Chen , [2006]
+3007 , Prof. Patrick Hughes , [2007]
+3008 , Prof. Rachel Summers , [2008]
+3009 , Prof. Victor Hale , [2009]
+3010 , Prof. Sofia Turner , [2010]
+3011 , Dr. Alan Murphy , [3001]
+3012 , Dr. Jasmine Ford , [3002]
+3013 , Dr. Ethan Russell , [4001]
+3014 , Dr. Nadia Karim , [4002]
+3015 , Engr. Thomas Reid , [5001,5002]
+3016 , Engr. Chloe Matthews , [6001,6002]
+3020 , Engr. Akhlaq Bhatti , [7001,7002]
+
+=== Labs ===
+LabID , LabCode , LabName
+201 , CS101-LAB , Introduction to Programming Lab
+202 , CS102-LAB , Data Structures Lab
+203 , CS103-LAB , Object-Oriented Programming Lab
+204 , CS104-LAB , Database Systems Lab
+205 , CS105-LAB , Operating Systems Lab
+301 , PHYS201-LAB , General Physics I Lab
+302 , PHYS202-LAB , Modern Physics Lab
+401 , CHEM201-LAB , Organic Chemistry Lab
+402 , CHEM202-LAB , Physical Chemistry Lab
+501 , EE201-LAB , Circuits and Instrumentation Lab
+502 , EE202-LAB , Digital Logic Design Lab
+601 , ME201-LAB , Mechanics of Materials Lab
+602 , ME202-LAB , Thermodynamics Lab
+701 , CE201-LAB , Structural Analysis Lab
+702 , CE202-LAB , Surveying and Geomatics Lab
+
+=== LabSections ===
+LabSectionID , LabID , CourseCode , InstructorID , TAID, roomNo
+2001 , 201 , CS101 , 3001 , 4001 , 1
+2002 , 201 , CS101 , 3002 , 4002 , 2
+2003 , 202 , CS102 , 3003 , 4003 , 3
+2004 , 202 , CS102 , 3004 , 4004 , 4
+2005 , 203 , CS103 , 3005 , 4005 , 5
+2006 , 203 , CS103 , 3006 , 4006 , 1
+2007 , 204 , CS104 , 3007 , 4007 , 2
+2008 , 204 , CS104 , 3008 , 4008 , 3
+2009 , 205 , CS105 , 3009 , 4009 , 4
+2010 , 205 , CS105 , 3010 , 4010 , 5
+3001 , 301 , PHYS201 , 3011 , 4011 , 21
+3002 , 302 , PHYS202 , 3012 , 4012 , 22
+4001 , 401 , CHEM201 , 3013 , 4013 , 26
+4002 , 402 , CHEM202 , 3014 , 4014 , 27
+5001 , 501 , EE201 , 3015 , 4015 , 6
+5002 , 501 , EE201 , 3016 , 4016 , 7
+5003 , 502 , EE202 , 3017 , 4017 , 8
+6001 , 601 , ME201 , 3018 , 4018 , 11
+6002 , 602 , ME202 , 3019 , 4019 , 12
+7001 , 701 , CE201 , 3020 , 4020 , 16
+7002 , 702 , CE202 , 3021 , 4021 , 17
+
+
+=== Schedules ===
+LabSectionID, DayOfWeek(1–7), StartHr, EndHr, StartMin, EndMin
+2001 , 1 , 09 , 11 , 00 , 00
+2002 , 1 , 11 , 13 , 00 , 00
+2003 , 1 , 13 , 15 , 00 , 00
+2004 , 1 , 15 , 17 , 00 , 00
+2005 , 1 , 17 , 19 , 00 , 00
+2006 , 1 , 19 , 21 , 00 , 00
+2007 , 1 , 08 , 10 , 00 , 00
+2008 , 1 , 10 , 12 , 00 , 00
+2009 , 1 , 12 , 14 , 00 , 00
+2010 , 1 , 14 , 16 , 00 , 00
+3001 , 2 , 09 , 11 , 00 , 00
+3002 , 2 , 11 , 13 , 00 , 00
+4001 , 3 , 09 , 11 , 00 , 00
+4002 , 3 , 11 , 13 , 00 , 00
+5001 , 4 , 09 , 11 , 00 , 00
+5002 , 4 , 11 , 13 , 00 , 00
+5003 , 4 , 13 , 15 , 00 , 00
+6001 , 5 , 09 , 11 , 00 , 00
+6002 , 5 , 11 , 13 , 00 , 00
+7001 , 6 , 09 , 11 , 00 , 00
+7002 , 6 , 11 , 13 , 00 , 00
+
+
