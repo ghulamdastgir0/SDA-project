@@ -6,11 +6,11 @@ using namespace std;
 Attendant::Attendant(string name, int buildingID, int attendantID) 
     : Person(attendantID, name), buildingID(buildingID)
 {
-    cout << "Attendant '" << name << "' (ID=" << attendantID << ") assigned to building " << buildingID << " created." << endl;
+    // Attendant created; quiet startup output for cleaner UI
 }
 
 Attendant::~Attendant() {
-    
+    // quiet destructor
 }
 
 void Attendant::setBuildingID(int id) {
@@ -22,5 +22,5 @@ int Attendant::getBuildingID() const {
 }
 
 void Attendant::recordTimeSheetEntry(TimeSheet &entry) {
-    cout << "Recording timesheet entry for Attendant " << getId() << endl;
+    // record handled via LabManagementSystem::recordTimeSheet
 }

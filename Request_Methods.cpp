@@ -5,29 +5,34 @@ using namespace std;
 
 // Default constructor
 InstructorRequest::InstructorRequest()
-    : labID(-1), instructorID(-1), weekNumber(-1), isApproved(false), reason("") {
+    : labID(-1), instructorID(-1), weekNumber(-1), isApproved(false), isDenied(false), reason("") {
     ++InstructorRequest::requestID;
 }
 
 // Parameterized constructor
 InstructorRequest::InstructorRequest(int lab, int instID, int weekNo, string Reason)
-    : labID(lab), instructorID(instID), weekNumber(weekNo), isApproved(false), reason(Reason)
+    : labID(lab), instructorID(instID), weekNumber(weekNo), isApproved(false), isDenied(false), reason(Reason)
 {
     ++InstructorRequest::requestID;
 }
 
 // Destructor
 InstructorRequest::~InstructorRequest() {
-    cout << "InstructorRequest (Lab ID: " << labID << ", Instructor ID: " << instructorID << ") destroyed." << endl;
+    // suppressed: request destructor output
 }
 
 // Approve the request
 void InstructorRequest::ApproveRequest() {
     isApproved = true;
-    cout << "Request from Instructor " << instructorID << " for Lab " << labID << " approved." << endl;
+    isDenied = false;
+}
+
+void InstructorRequest::DenyRequest() {
+    isDenied = true;
+    isApproved = false;
 }
 
 void InstructorRequest::viewRequestDetails() {
-    cout << "Request ID: " << requestID << ", Lab ID: " << labID << ", Instructor ID: " 
-         << instructorID << ", Week: " << weekNumber << ", Approved: " << isApproved << endl;
+        cout << "Request ID: " << requestID << ", Lab ID: " << labID << ", Instructor ID: " 
+            << instructorID << ", Week: " << weekNumber << ", Approved: " << isApproved << ", Denied: " << isDenied << endl;
 }

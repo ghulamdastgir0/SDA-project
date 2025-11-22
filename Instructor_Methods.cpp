@@ -8,7 +8,7 @@ using namespace std;
 Instructor::Instructor(int id, const string &name, const vector<int> &managedLabSectionIDs)
     : Person(id, name), managedLabIds(managedLabSectionIDs)
 {
-    cout << "Instructor '" << name << "' (ID=" << id << ") initialized with " << managedLabIds.size() << " assigned lab IDs." << endl;
+    // suppressed: Instructor constructor output for cleaner UI
 }
 
 Instructor::~Instructor() {
@@ -20,7 +20,6 @@ Instructor::~Instructor() {
 void Instructor::assignLab(int labId) {
     // store the lab ID
     managedLabIds.push_back(labId);
-    cout << "Instructor " << getName() << " assigned to lab ID: " << labId << "\n";
 }
 
 void Instructor::removeAssignedLab(int labId) {
@@ -28,9 +27,9 @@ void Instructor::removeAssignedLab(int labId) {
     auto it = find(managedLabIds.begin(), managedLabIds.end(), labId);
     if (it != managedLabIds.end()) {
         managedLabIds.erase(it);
-        cout << "Instructor " << getName() << " removed lab ID: " << labId << "\n";
+        // suppressed: instructor lab removal message
     } else {
-        cout << "Instructor " << getName() << " is not assigned to lab ID " << labId << "." << endl;
+        // suppressed: instructor not assigned message
     }
 }
 

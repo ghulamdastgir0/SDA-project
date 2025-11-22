@@ -9,7 +9,7 @@ using namespace std;
   HeadOfDepartment::HeadOfDepartment(int id, const string &name, const vector<int> &assignedLabSectionIDs)
         : Person(id, name), managedLabIds(assignedLabSectionIDs)
     {
-        cout << "HeadOfDepartment '" << name << "' (ID=" << id << ") initialized with " << managedLabIds.size() << " assigned lab sections." << endl;
+        // suppressed: HOD constructor output for cleaner UI
     }
 
 HeadOfDepartment::~HeadOfDepartment() {
@@ -22,27 +22,22 @@ vector<int> HeadOfDepartment::getManagedLabIds() const {
 
 vector<Schedule> HeadOfDepartment::getCompleteWeeklySchedule(int weekNumber) const {
     // Return empty vector for now; real implementation should query the system
-    cout << "HOD: getCompleteWeeklySchedule(" << weekNumber << ") called." << endl;
     return {};
 }
 
 vector<TimeSheet> HeadOfDepartment::getFilledTimeSheetsForWeek(int weekNumber) const {
-    cout << "HOD: getFilledTimeSheetsForWeek(" << weekNumber << ") called." << endl;
     return {};
 }
 
 vector<TimeSheet> HeadOfDepartment::getTimeSheetsForLab(int labId) const {
-    cout << "HOD: getTimeSheetsForLab(" << labId << ") called." << endl;
     return {};
 }
 
 double HeadOfDepartment::computeTotalContactHoursForLab(int labId) const {
-    cout << "HOD: computeTotalContactHoursForLab(" << labId << ") called." << endl;
     return 0.0;
 }
 
 int HeadOfDepartment::computeLeavesForLab(int labId) const {
-    cout << "HOD: computeLeavesForLab(" << labId << ") called." << endl;
     return 0;
 }
 

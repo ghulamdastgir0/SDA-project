@@ -6,7 +6,7 @@ using namespace std;
 Lab::Lab(int ID, string code, string name)
     : labID(ID), labCode(code), labName(name), sections()
 {
-    cout << "Lab '" << labName << "' (Code=" << labCode << ", ID=" << labID << ") created." << endl;
+    // suppressed: Lab constructor output for cleaner UI
 }
 
 Lab::~Lab() {

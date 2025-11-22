@@ -11,9 +11,7 @@ LabSection::LabSection()
 LabSection::LabSection(int sectionID, int labID, string courseCode, int instructorID, int taID, int roomNo)
     : sectionID(sectionID), labID(labID), courseCode(courseCode), teachingHours(0), leaves(0), instructorID(instructorID), taID(taID), roomNo(roomNo), schedule(nullptr)
 {
-    cout << "LabSection created: sectionID=" << sectionID << " labID=" << labID
-         << " course=" << courseCode << " room=" << roomNo << " instructor=" << instructorID
-         << " TA=" << taID << "\n";
+    // suppressed: LabSection creation output for cleaner UI
 }
 
 LabSection::~LabSection() {
@@ -22,28 +20,28 @@ LabSection::~LabSection() {
 
 void LabSection::addTA(TA* ta) {
     if (!ta) return;
-    cout << "Adding TA to LabSection " << sectionID << " (TA pointer=" << ta << ")\n";
+    // suppressed: add TA log
 }
 
 void LabSection::assignRoom(Room* r) {
     if (!r) return;
-    cout << "Assigning room to LabSection " << sectionID << " (Room ptr=" << r << ")\n";
+    // suppressed: assign room log
 }
 
 void LabSection::updateTeachingHours(int hrs) {
     if (hrs < 0) return;
     teachingHours = hrs;
-    cout << "LabSection " << sectionID << " teaching hours set to " << teachingHours << "\n";
+    // suppressed: teaching hours update log
 }
 
 void LabSection::incrementLeaves() {
     ++leaves;
-    cout << "LabSection " << sectionID << " leaves incremented to " << leaves << "\n";
+    // suppressed: leaves increment log
 }
 
 void LabSection::decrementLeaves() {
     if (leaves > 0) --leaves;
-    cout << "LabSection " << sectionID << " leaves decremented to " << leaves << "\n";
+    // suppressed: leaves decrement log
 }
 
 int LabSection::getSectionID() const {

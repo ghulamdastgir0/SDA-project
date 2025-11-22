@@ -23,16 +23,18 @@ int main()
 
     // STEP 2: Run this after files are created
     LabManagementSystem LabSystem;
-    LabSystem.printBuildings();
-    LabSystem.printAcademicOfficers();
-    LabSystem.printAttendants();
-    LabSystem.printHODs();
-    LabSystem.printTAs();
-    LabSystem.printInstructors();
-    LabSystem.printRooms();
-    LabSystem.printLabs();
-    LabSystem.printLabSections();
-    LabSystem.printSchedules();
+    // Suppressed: startup prints (buildings/rooms/labs/etc.) to keep UI clean.
+    // To re-enable for debugging uncomment the calls below.
+    // LabSystem.printBuildings();
+    // LabSystem.printAcademicOfficers();
+    // LabSystem.printAttendants();
+    // LabSystem.printHODs();
+    // LabSystem.printTAs();
+    // LabSystem.printInstructors();
+    // LabSystem.printRooms();
+    // LabSystem.printLabs();
+    // LabSystem.printLabSections();
+    // LabSystem.printSchedules();
     LabSystem.run();
 
     return 0;

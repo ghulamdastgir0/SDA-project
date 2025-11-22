@@ -16,4 +16,8 @@ public:
     ~TimeSheet();
 
     void setTime(int startHr, int EndHr, int startMin, int endMin);
+        int getLabID() const { return labID; }
+        int getWeekNumber() const { return weekNumber; }
+        int getDayOfWeek() const { return dayOfWeek; }
+        const Timing& getTiming() const { return time; }
 };

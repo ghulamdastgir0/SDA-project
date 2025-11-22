@@ -118,6 +118,10 @@ public:
 
     //reading pendingRequest.dat
     void loadPendingRequestsFromFile();
+    // reading/writing timesheets
+    void loadTimeSheetsFromFile();
+    // expose pending requests for menus (non-owning raw pointers)
+    std::vector<InstructorRequest*> getPendingRequests() const;
 
 private:
     // Owned collections
