@@ -10,8 +10,8 @@ InstructorRequest::InstructorRequest()
 }
 
 // Parameterized constructor
-InstructorRequest::InstructorRequest(int lab, int instID, int weekNo, string Reason)
-    : labID(lab), instructorID(instID), weekNumber(weekNo), isApproved(false), isDenied(false), reason(Reason)
+InstructorRequest::InstructorRequest(int lab, int instID, int weekNo, int dayOfWeek_, int sHr, int sMin, int eHr, int eMin, string Reason)
+    : labID(lab), instructorID(instID), weekNumber(weekNo), dayOfWeek(dayOfWeek_), startHour(sHr), startMin(sMin), endHour(eHr), endMin(eMin), isApproved(false), isDenied(false), reason(Reason)
 {
     ++InstructorRequest::requestID;
 }
@@ -34,5 +34,7 @@ void InstructorRequest::DenyRequest() {
 
 void InstructorRequest::viewRequestDetails() {
         cout << "Request ID: " << requestID << ", Lab ID: " << labID << ", Instructor ID: " 
-            << instructorID << ", Week: " << weekNumber << ", Approved: " << isApproved << ", Denied: " << isDenied << endl;
+            << instructorID << ", Week: " << weekNumber << ", Day: " << dayOfWeek
+            << ", Time: " << startHour << ":" << startMin << "-" << endHour << ":" << endMin
+            << ", Approved: " << isApproved << ", Denied: " << isDenied << endl;
 }

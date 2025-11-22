@@ -1158,8 +1158,8 @@ void LabManagementSystem::printSchedules() const {
 
 // Minimal implementations so the program links. Full method bodies will be added later.
 // Submit an instructor request: create request object, store in memory and persist to pendingRequest.dat
-InstructorRequest* LabManagementSystem::submitInstructorRequest(int instructorId, int labId, int weekNumber, const string &reason) {
-    auto req = make_unique<InstructorRequest>(labId, instructorId, weekNumber, reason);
+InstructorRequest* LabManagementSystem::submitInstructorRequest(int instructorId, int labId, int weekNumber, int dayOfWeek, int startHour, int startMin, int endHour, int endMin, const string &reason) {
+    auto req = make_unique<InstructorRequest>(labId, instructorId, weekNumber, dayOfWeek, startHour, startMin, endHour, endMin, reason);
     InstructorRequest* ptr = req.get();
 
     // store in memory
@@ -1175,10 +1175,20 @@ InstructorRequest* LabManagementSystem::submitInstructorRequest(int instructorId
             int labID = rqptr->getLabId();
             int instID = rqptr->getInstructorId();
             int weekNo = rqptr->getWeekNumber();
+            int day = rqptr->getDayOfWeek();
+            int sHr = rqptr->getStartHour();
+            int sMin = rqptr->getStartMin();
+            int eHr = rqptr->getEndHour();
+            int eMin = rqptr->getEndMin();
             int status = rqptr->getIsApproved() ? 1 : (rqptr->getIsDenied() ? 2 : 0);
             pout.write(reinterpret_cast<char*>(&labID), sizeof(int));
             pout.write(reinterpret_cast<char*>(&instID), sizeof(int));
             pout.write(reinterpret_cast<char*>(&weekNo), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&day), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&sHr), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&sMin), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&eHr), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&eMin), sizeof(int));
             pout.write(reinterpret_cast<char*>(&status), sizeof(int));
             int len = (int)rqptr->getReason().size();
             pout.write(reinterpret_cast<char*>(&len), sizeof(int));
@@ -1297,10 +1307,17 @@ void LabManagementSystem::loadPendingRequestsFromFile() {
                 int labID = 0;
                 int instID = 0;
                 int weekNo = 0;
+                int day = 0;
+                int sHr=0,sMin=0,eHr=0,eMin=0;
                 int statusInt = 0; // 0 = pending, 1 = approved, 2 = denied
                 pin.read(reinterpret_cast<char*>(&labID), sizeof(int));
                 pin.read(reinterpret_cast<char*>(&instID), sizeof(int));
                 pin.read(reinterpret_cast<char*>(&weekNo), sizeof(int));
+                pin.read(reinterpret_cast<char*>(&day), sizeof(int));
+                pin.read(reinterpret_cast<char*>(&sHr), sizeof(int));
+                pin.read(reinterpret_cast<char*>(&sMin), sizeof(int));
+                pin.read(reinterpret_cast<char*>(&eHr), sizeof(int));
+                pin.read(reinterpret_cast<char*>(&eMin), sizeof(int));
                 pin.read(reinterpret_cast<char*>(&statusInt), sizeof(int));
                 int reasonLen = 0;
                 pin.read(reinterpret_cast<char*>(&reasonLen), sizeof(int));
@@ -1310,16 +1327,16 @@ void LabManagementSystem::loadPendingRequestsFromFile() {
                     pin.read(&reason[0], reasonLen);
                 }
                 if (!pin) break;
-                auto req = make_unique<InstructorRequest>(labID, instID, weekNo, reason);
+                auto req = make_unique<InstructorRequest>(labID, instID, weekNo, day, sHr, sMin, eHr, eMin, reason);
                 if (statusInt == 1) req->ApproveRequest();
                 else if (statusInt == 2) req->DenyRequest();
                 InstructorRequest* reqPtr = req.get();
                 m_requests.push_back(move(req));
-                
+
                 // Link loaded request back to its instructor
                 Instructor* instr = findInstructorById(instID);
                 if (instr) {
-                    instr->getRequests().push_back(reqPtr);
+                    instr->addRequestPointer(reqPtr);
                 }
             }
         }
@@ -1339,10 +1356,20 @@ LabManagementSystem::~LabManagementSystem() {
             int labID = rqptr->getLabId();
             int instID = rqptr->getInstructorId();
             int weekNo = rqptr->getWeekNumber();
+            int day = rqptr->getDayOfWeek();
+            int sHr = rqptr->getStartHour();
+            int sMin = rqptr->getStartMin();
+            int eHr = rqptr->getEndHour();
+            int eMin = rqptr->getEndMin();
             int status = rqptr->getIsApproved() ? 1 : (rqptr->getIsDenied() ? 2 : 0);
             pout.write(reinterpret_cast<char*>(&labID), sizeof(int));
             pout.write(reinterpret_cast<char*>(&instID), sizeof(int));
             pout.write(reinterpret_cast<char*>(&weekNo), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&day), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&sHr), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&sMin), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&eHr), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&eMin), sizeof(int));
             pout.write(reinterpret_cast<char*>(&status), sizeof(int));
             int len = (int)rqptr->getReason().size();
             pout.write(reinterpret_cast<char*>(&len), sizeof(int));
@@ -1370,10 +1397,20 @@ bool LabManagementSystem::processRequest(int requestId, bool approve) {
             int labID = req->getLabId();
             int instID = req->getInstructorId();
             int weekNo = req->getWeekNumber();
+            int day = req->getDayOfWeek();
+            int sHr = req->getStartHour();
+            int sMin = req->getStartMin();
+            int eHr = req->getEndHour();
+            int eMin = req->getEndMin();
             int status = 1; // approved
             aout.write(reinterpret_cast<char*>(&labID), sizeof(int));
             aout.write(reinterpret_cast<char*>(&instID), sizeof(int));
             aout.write(reinterpret_cast<char*>(&weekNo), sizeof(int));
+            aout.write(reinterpret_cast<char*>(&day), sizeof(int));
+            aout.write(reinterpret_cast<char*>(&sHr), sizeof(int));
+            aout.write(reinterpret_cast<char*>(&sMin), sizeof(int));
+            aout.write(reinterpret_cast<char*>(&eHr), sizeof(int));
+            aout.write(reinterpret_cast<char*>(&eMin), sizeof(int));
             aout.write(reinterpret_cast<char*>(&status), sizeof(int));
             int len = (int)req->getReason().size();
             aout.write(reinterpret_cast<char*>(&len), sizeof(int));

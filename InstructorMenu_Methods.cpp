@@ -108,13 +108,20 @@ void InstructorMenu::addRequest() {
     // Display assigned lab sections (we need LMS access to get full lab info)
     cout << "Your Lab Sections:" << endl;
     vector<int> assignedLabIds = instructor->getAssignedLabIds();
-    
+
     if (assignedLabIds.empty()) {
         cout << "You have no assigned lab sections." << endl;
         return;
     }
-    
-    cout << "\nEnter Lab ID (from your assigned labs): ";
+
+    cout << "Assigned Lab Section IDs: ";
+    for (size_t i = 0; i < assignedLabIds.size(); ++i) {
+        cout << assignedLabIds[i];
+        if (i < assignedLabIds.size() - 1) cout << ", ";
+    }
+    cout << "\n";
+
+    cout << "Enter Lab Section ID (from your assigned labs): ";
     int labId = 0;
     cin >> labId;
     cin.ignore();
@@ -129,32 +136,34 @@ void InstructorMenu::addRequest() {
     }
     
     if (!hasLab) {
-        cout << "ERROR: Lab ID " << labId << " is not assigned to you." << endl;
+        cout << "ERROR: Lab Section ID " << labId << " is not assigned to you." << endl;
         return;
     }
     
+    cout << "Enter Week number for the makeup (e.g., 10): ";
+    int weekNumber = 0; cin >> weekNumber; cin.ignore();
+    if (weekNumber < 1) { cout << "ERROR: Invalid week number." << endl; return; }
+
     cout << "Enter Day Number (1=Monday, 2=Tuesday, ..., 7=Sunday): ";
-    int dayNumber = 0;
-    cin >> dayNumber;
-    cin.ignore();
-    
-    if (dayNumber < 1 || dayNumber > 7) {
-        cout << "ERROR: Invalid day number. Please use 1-7." << endl;
-        return;
-    }
-    
+    int dayNumber = 0; cin >> dayNumber; cin.ignore();
+    if (dayNumber < 1 || dayNumber > 7) { cout << "ERROR: Invalid day number. Please use 1-7." << endl; return; }
+
+    cout << "Enter Start hour (0-23): "; int sHr=0; cin >> sHr; cin.ignore();
+    cout << "Enter Start minute (0-59): "; int sMin=0; cin >> sMin; cin.ignore();
+    cout << "Enter End hour (0-23): "; int eHr=0; cin >> eHr; cin.ignore();
+    cout << "Enter End minute (0-59): "; int eMin=0; cin >> eMin; cin.ignore();
+
     cout << "Enter Reason for Request: ";
-    string reason;
-    getline(cin, reason);
-    
-    // Submit through instructor's method
-    int requestCount = instructor->createMakeupRequest(*lms, labId, dayNumber, reason);
+    string reason; getline(cin, reason);
+
+    // Submit through instructor's method with week/day and times
+    int requestCount = instructor->createMakeupRequest(*lms, labId, weekNumber, dayNumber, sHr, sMin, eHr, eMin, reason);
     
     const char* dayNames[] = {"", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     
     cout << "\n========== Request Submitted ===========" << endl;
     cout << "Lab ID: " << labId << endl;
-    cout << "Day: " << dayNames[dayNumber] << " (" << dayNumber << ")" << endl;
+    cout << "Week: " << weekNumber << " | Day: " << dayNames[dayNumber] << " (" << dayNumber << ")" << endl;
     cout << "Reason: " << reason << endl;
     cout << "Status: Pending Approval" << endl;
     cout << "Total Requests: " << requestCount << endl;
@@ -179,10 +188,13 @@ void InstructorMenu::viewMyRequests() {
     
     for (size_t i = 0; i < myRequests.size(); ++i) {
         InstructorRequest* req = myRequests[i];
-        cout << (i + 1) << ". Lab ID: " << req->getLabId()
-             << " | Day: " << dayNames[req->getWeekNumber()] << " (" << req->getWeekNumber() << ")"
-             << " | Reason: " << req->getReason()
-             << " | Status: " << (req->getIsApproved() ? "Approved" : "Pending") << endl;
+           cout << (i + 1) << ". Lab ID: " << req->getLabId()
+               << " | Week: " << req->getWeekNumber()
+               << " | Day: " << dayNames[req->getDayOfWeek()] << " (" << req->getDayOfWeek() << ")"
+               << " | Time: " << req->getStartHour() << ":" << (req->getStartMin()<10?"0":"") << req->getStartMin()
+               << "-" << req->getEndHour() << ":" << (req->getEndMin()<10?"0":"") << req->getEndMin()
+               << " | Reason: " << req->getReason()
+               << " | Status: " << (req->getIsApproved() ? "Approved" : "Pending") << endl;
     }
     
     cout << "\n========================================" << endl;

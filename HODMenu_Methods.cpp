@@ -44,7 +44,7 @@ void HODMenu::viewPendingRequests() {
         string status = "Pending";
         if (r->getIsApproved()) status = "Approved";
         else if (r->getIsDenied()) status = "Denied";
-        cout << i+1 << ". Lab ID: " << r->getLabId()
+        cout << i+1 << ". LabSection ID: " << r->getLabId()
              << " | Instructor ID: " << r->getInstructorId()
              << " | Day/Week: " << r->getWeekNumber()
              << " | Reason: " << r->getReason()

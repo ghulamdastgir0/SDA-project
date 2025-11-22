@@ -59,8 +59,11 @@ void AttendantMenu::displayMenu() {
                 auto r = reqs[i];
                 if (r && r->getIsApproved()) {
                     printed++;
-                    cout << printed << ". LabID:" << r->getLabId() << " | Instructor:" << r->getInstructorId()
-                         << " | Week:" << r->getWeekNumber() << " | Reason:" << r->getReason() << endl;
+                    cout << printed << ". LabSectionID:" << r->getLabId() << " | Instructor:" << r->getInstructorId()
+                        << " | Week:" << r->getWeekNumber() << " | Day:" << r->getDayOfWeek()
+                         << " | Time: " << r->getStartHour() << ":" << (r->getStartMin()<10?"0":"") << r->getStartMin()
+                         << "-" << r->getEndHour() << ":" << (r->getEndMin()<10?"0":"") << r->getEndMin()
+                         << " | Reason:" << r->getReason() << endl;
                 }
             }
             if (printed == 0) cout << "No approved requests." << endl;

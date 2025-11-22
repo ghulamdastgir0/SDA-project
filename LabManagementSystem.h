@@ -54,7 +54,7 @@ public:
     TimeSheet* recordTimeSheet(int labId, int dayOfWeek, int weekNo, const Timing &time);
 
     // --- Requests
-    InstructorRequest* submitInstructorRequest(int instructorId, int labId, int weekNumber, const string &reason);
+    InstructorRequest* submitInstructorRequest(int instructorId, int labId, int weekNumber, int dayOfWeek, int startHour, int startMin, int endHour, int endMin, const string &reason);
     bool processRequest(int requestId, bool approve);
 
     // --- High-level operations / reports (delegates to other managers / classes)

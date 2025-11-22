@@ -37,9 +37,9 @@ vector<int> Instructor::getAssignedLabIds() const {
     return managedLabIds;
 }
 
-int Instructor::createMakeupRequest(LabManagementSystem &lms, int labId, int weekNumber, const string &reason) {
+int Instructor::createMakeupRequest(LabManagementSystem &lms, int labId, int weekNumber, int dayOfWeek, int startHour, int startMin, int endHour, int endMin, const string &reason) {
     // Submit the request through the LabManagementSystem which owns the request.
-    InstructorRequest *r = lms.submitInstructorRequest(getId(), labId, weekNumber, reason);
+    InstructorRequest *r = lms.submitInstructorRequest(getId(), labId, weekNumber, dayOfWeek, startHour, startMin, endHour, endMin, reason);
     if (r) {
         requests.push_back(r);
         cout << "Instructor " << getName() << " submitted makeup request for lab " << labId
@@ -52,4 +52,8 @@ int Instructor::createMakeupRequest(LabManagementSystem &lms, int labId, int wee
 
 vector<InstructorRequest*> Instructor::getRequests() {
     return requests;
+}
+
+void Instructor::addRequestPointer(InstructorRequest* reqPtr) {
+    if (reqPtr) requests.push_back(reqPtr);
 }
