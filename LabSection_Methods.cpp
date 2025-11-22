@@ -3,17 +3,21 @@
 
 using namespace std;
 
-LabSection::LabSection(int sectionID, int labID, string courseCode, int instructorID, int taID, int roomNo)
-    : sectionID(sectionID), labID(labID), courseCode(courseCode), teachingHours(0), leaves(0), 
-      instructorID(instructorID), taID(taID), roomNo(roomNo)
+LabSection::LabSection()
+    : sectionID(0), labID(0), courseCode(""), teachingHours(0), leaves(0), instructorID(0), taID(0), roomNo(0), schedule(nullptr)
 {
-    cout << "LabSection created: sectionID=" << sectionID << " labID=" << labID 
-         << " course=" << courseCode << " room=" << roomNo << " instructor=" << instructorID 
+}
+
+LabSection::LabSection(int sectionID, int labID, string courseCode, int instructorID, int taID, int roomNo)
+    : sectionID(sectionID), labID(labID), courseCode(courseCode), teachingHours(0), leaves(0), instructorID(instructorID), taID(taID), roomNo(roomNo), schedule(nullptr)
+{
+    cout << "LabSection created: sectionID=" << sectionID << " labID=" << labID
+         << " course=" << courseCode << " room=" << roomNo << " instructor=" << instructorID
          << " TA=" << taID << "\n";
 }
 
 LabSection::~LabSection() {
-    // nothing to free: we don't own TA or Room pointers here (we store IDs)
+    // unique_ptr will clean up schedule automatically
 }
 
 void LabSection::addTA(TA* ta) {
@@ -66,14 +70,14 @@ int LabSection::getRoomNo() const {
     return roomNo;
 }
 
-void LabSection::addSchedule(unique_ptr<Schedule> schedule) {
-    schedules.push_back(move(schedule));
+void LabSection::setSchedule(std::unique_ptr<Schedule> s) {
+    schedule = std::move(s);
 }
 
-const vector<unique_ptr<Schedule>>& LabSection::getSchedules() const {
-    return schedules;
+const Schedule* LabSection::getSchedule() const {
+    return schedule.get();
 }
 
 int LabSection::getScheduleCount() const {
-    return schedules.size();
+    return schedule ? 1 : 0;
 }

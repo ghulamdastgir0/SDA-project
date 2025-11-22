@@ -5,8 +5,8 @@ using namespace std;
 
 // Default constructor
 InstructorRequest::InstructorRequest()
-    : labID(0), instructorID(0), weekNumber(0), isApproved(false), reason("")
-{
+    : labID(-1), instructorID(-1), weekNumber(-1), isApproved(false), reason("") {
+    ++InstructorRequest::requestID;
 }
 
 // Parameterized constructor

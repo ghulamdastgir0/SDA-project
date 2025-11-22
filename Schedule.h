@@ -8,7 +8,6 @@ class Schedule {
 private:
     int labSectionID;
     int dayOfWeek;
-    bool isMakeup;
     Timing time;
 public:
     Schedule(int labSectionID, int dayOfWeek, int startHr, int endHr, int startMin, int endMin);
@@ -20,7 +19,5 @@ public:
     
     int getLabSectionID() const;
     int getDayOfWeek() const;
-    bool getIsMakeup() const;
     const Timing& getTiming() const;
-    void setIsMakeup(bool makeup);
 };

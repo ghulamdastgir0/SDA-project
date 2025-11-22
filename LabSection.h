@@ -6,6 +6,8 @@
 #include <vector>
 #include <memory>
 
+using namespace std;
+
 class TA;  // Forward declaration
 
 class LabSection {
@@ -18,7 +20,7 @@ private:
     int instructorID;
     int taID;
     int roomNo;
-    vector<unique_ptr<Schedule>> schedules;
+    unique_ptr<Schedule> schedule;
 public:
     LabSection();
     LabSection(int sectionID, int labID, string courseCode, int instructorID, int taID, int roomNo);
@@ -36,8 +38,8 @@ public:
     int getInstructorID() const;
     int getTAID() const;
     int getRoomNo() const;
-    
-    void addSchedule(unique_ptr<Schedule> schedule);
-    const vector<unique_ptr<Schedule>>& getSchedules() const;
-    int getScheduleCount() const;
+
+    void setSchedule(std::unique_ptr<Schedule> schedule);
+    const Schedule* getSchedule() const;
+    int getScheduleCount() const; // returns 0 or 1
 };

@@ -20,4 +20,8 @@ public:
     void ApproveRequest();
     void viewRequestDetails();
     int getInstructorId() const { return instructorID; }
+    int getLabId() const { return labID; }
+    int getWeekNumber() const { return weekNumber; }
+    const std::string& getReason() const { return reason; }
+    bool getIsApproved() const { return isApproved; }
 };

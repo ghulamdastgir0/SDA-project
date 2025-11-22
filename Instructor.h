@@ -3,8 +3,10 @@
 #include "Person.h"
 #include <vector>
 #include <string>
+#include <vector>
 // Forward declarations to avoid circular includes
 class LabSection;
+class LabManagementSystem;
 #include "Request.h"
 
 using namespace std;
@@ -19,7 +21,7 @@ public:
     void removeAssignedLab(int labId);
     vector<int> getAssignedLabIds() const;
 
-    int createMakeupRequest(int labId, int weekNumber, const string &reason);
+    int createMakeupRequest(class LabManagementSystem &lms, int labId, int weekNumber, const string &reason);
     vector<InstructorRequest*> getRequests();
 
 private:

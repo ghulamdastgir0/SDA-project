@@ -51,7 +51,7 @@ public:
 
     // --- Scheduling and timesheets
     Schedule* addScheduleEntry(int labId, int dayOfWeek, int weekNo, const Timing &time);
-    TimeSheet* recordTimeSheet(int labId, int dayOfWeek, int weekNo, const Timing &time, bool isMakeup = false);
+    TimeSheet* recordTimeSheet(int labId, int dayOfWeek, int weekNo, const Timing &time);
 
     // --- Requests
     InstructorRequest* submitInstructorRequest(int instructorId, int labId, int weekNumber, const string &reason);
@@ -64,7 +64,7 @@ public:
     double computeTotalContactHoursForLab(int labId) const;
     int computeLeavesForLab(int labId) const;
 
-    void run(){ cout<<"running"<<endl; };
+    void run();
 
     //reading buildings.dat
     void loadBuildingsFromFile();
@@ -115,6 +115,9 @@ public:
     void loadSchedulesFromFile();
     void writeSchedulesToFile();
     void printSchedules() const;
+
+    //reading pendingRequest.dat
+    void loadPendingRequestsFromFile();
 
 private:
     // Owned collections

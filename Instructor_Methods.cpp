@@ -1,4 +1,5 @@
 #include "Instructor.h"
+#include "LabManagementSystem.h"
 #include <iostream>
 #include <algorithm>
 
@@ -11,11 +12,8 @@ Instructor::Instructor(int id, const string &name, const vector<int> &managedLab
 }
 
 Instructor::~Instructor() {
-    // clean up requests if owned
-    for (auto *r : requests) {
-        // requests allocated by createMakeupRequest; free them
-        delete r;
-    }
+    // Requests are owned by LabManagementSystem (stored as unique_ptr there).
+    // Do not delete the raw pointers here; just clear the tracking list.
     requests.clear();
 }
 
@@ -40,11 +38,16 @@ vector<int> Instructor::getAssignedLabIds() const {
     return managedLabIds;
 }
 
-int Instructor::createMakeupRequest(int labId, int weekNumber, const string &reason) {
-    // Create a simple InstructorRequest via default constructor and store it.
-    InstructorRequest *r = new InstructorRequest();
-    requests.push_back(r);
-    cout << "Instructor " << getName() << " created makeup request for lab " << labId << " week " << weekNumber << "\n";
+int Instructor::createMakeupRequest(LabManagementSystem &lms, int labId, int weekNumber, const string &reason) {
+    // Submit the request through the LabManagementSystem which owns the request.
+    InstructorRequest *r = lms.submitInstructorRequest(getId(), labId, weekNumber, reason);
+    if (r) {
+        requests.push_back(r);
+        cout << "Instructor " << getName() << " submitted makeup request for lab " << labId
+             << " week " << weekNumber << "\n";
+    } else {
+        cout << "Instructor " << getName() << " failed to submit makeup request for lab " << labId << "\n";
+    }
     return static_cast<int>(requests.size());
 }
 

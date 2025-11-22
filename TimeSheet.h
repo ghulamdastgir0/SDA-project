@@ -7,7 +7,6 @@ private:
     int labID;
     int weekNumber;
     int dayOfWeek;
-    bool isMakeup;
     Timing time;
 
 public:

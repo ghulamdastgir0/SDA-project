@@ -1103,7 +1103,7 @@ void LabManagementSystem::loadSchedulesFromFile() {
         }
 
         if (parentSection) {
-            parentSection->addSchedule(move(schedule));
+            parentSection->setSchedule(move(schedule));
         } else {
             cout << "Warning: LabSection " << data.labSectionID << " not found for schedule" << endl;
             // Still store in m_schedules for tracking
@@ -1149,13 +1149,13 @@ void LabManagementSystem::printSchedules() const {
                      << " (Course: " << section->getCourseCode() << ")" << endl;
                 cout << "  Schedules: " << section->getScheduleCount() << endl;
                 
-                const auto& schedules = section->getSchedules();
-                for (const auto& schedule : schedules) {
+                const Schedule* schedule = section->getSchedule();
+                if (schedule) {
                     cout << "    - Day: " << dayNames[schedule->getDayOfWeek()] 
                          << " (" << schedule->getDayOfWeek() << ")";
                     cout << " | Time: ";
                     schedule->getTiming().print();
-                    cout << " | Makeup: " << (schedule->getIsMakeup() ? "Yes" : "No") << endl;
+                    cout << endl;
                 }
             }
         }
@@ -1164,6 +1164,41 @@ void LabManagementSystem::printSchedules() const {
 }
 
 // Minimal implementations so the program links. Full method bodies will be added later.
+// Submit an instructor request: create request object, store in memory and persist to pendingRequest.dat
+InstructorRequest* LabManagementSystem::submitInstructorRequest(int instructorId, int labId, int weekNumber, const string &reason) {
+    auto req = make_unique<InstructorRequest>(labId, instructorId, weekNumber, reason);
+    InstructorRequest* ptr = req.get();
+
+    // store in memory
+    m_requests.push_back(move(req));
+
+    // persist all pending requests to file (overwrite) so the file always reflects current state
+    ofstream pout("pendingRequest.dat", ios::binary | ios::trunc);
+    if (pout) {
+        int count = (int)m_requests.size();
+        pout.write(reinterpret_cast<char*>(&count), sizeof(int));
+        for (const auto &rqptr : m_requests) {
+            if (!rqptr) continue;
+            int labID = rqptr->getLabId();
+            int instID = rqptr->getInstructorId();
+            int weekNo = rqptr->getWeekNumber();
+            int approvedInt = rqptr->getIsApproved() ? 1 : 0;
+            pout.write(reinterpret_cast<char*>(&labID), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&instID), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&weekNo), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&approvedInt), sizeof(int));
+            int len = (int)rqptr->getReason().size();
+            pout.write(reinterpret_cast<char*>(&len), sizeof(int));
+            if (len > 0) pout.write(rqptr->getReason().data(), len);
+        }
+        pout.close();
+    }
+
+    // return pointer to the stored request (owned by m_requests)
+    return ptr;
+}
+
+
 LabManagementSystem::LabManagementSystem() 
     : m_academicOfficers(),
       m_attendants(),
@@ -1187,12 +1222,202 @@ LabManagementSystem::LabManagementSystem()
     loadHODsFromFile();
     loadTAsFromFile();
     loadInstructorsFromFile();
+
     loadRoomsFromFile();  // Load rooms after buildings
     loadLabsFromFile();
     loadLabSectionsFromFile();  // Load lab sections after labs
     loadSchedulesFromFile();  // Load schedules after lab sections
+    loadPendingRequestsFromFile();  // Load pending instructor requests
+}
+
+void LabManagementSystem::loadPendingRequestsFromFile() {
+    ifstream pin("pendingRequest.dat", ios::binary);
+    if (pin) {
+        int count = 0;
+        pin.read(reinterpret_cast<char*>(&count), sizeof(int));
+        if (pin && count > 0 && count < 100000) {
+            for (int i = 0; i < count; ++i) {
+                int labID = 0;
+                int instID = 0;
+                int weekNo = 0;
+                int approvedInt = 0;
+                pin.read(reinterpret_cast<char*>(&labID), sizeof(int));
+                pin.read(reinterpret_cast<char*>(&instID), sizeof(int));
+                pin.read(reinterpret_cast<char*>(&weekNo), sizeof(int));
+                pin.read(reinterpret_cast<char*>(&approvedInt), sizeof(int));
+                int reasonLen = 0;
+                pin.read(reinterpret_cast<char*>(&reasonLen), sizeof(int));
+                string reason;
+                if (reasonLen > 0 && reasonLen < 10000) {
+                    reason.resize(reasonLen);
+                    pin.read(&reason[0], reasonLen);
+                }
+                if (!pin) break;
+                auto req = make_unique<InstructorRequest>(labID, instID, weekNo, reason);
+                if (approvedInt) req->ApproveRequest();
+                InstructorRequest* reqPtr = req.get();
+                m_requests.push_back(move(req));
+                
+                // Link loaded request back to its instructor
+                Instructor* instr = findInstructorById(instID);
+                if (instr) {
+                    instr->getRequests().push_back(reqPtr);
+                }
+            }
+        }
+        pin.close();
+        if (!m_requests.empty()) cout << "Loaded " << m_requests.size() << " pending request(s) from pendingRequest.dat" << endl;
+    }
 }
 
 LabManagementSystem::~LabManagementSystem() {
-    // cleanup if needed
+    // On shutdown persist pending requests to disk (overwrite pendingRequest.dat)
+    ofstream pout("pendingRequest.dat", ios::binary | ios::trunc);
+    if (pout) {
+        int count = (int)m_requests.size();
+        pout.write(reinterpret_cast<char*>(&count), sizeof(int));
+        for (const auto &rqptr : m_requests) {
+            if (!rqptr) continue;
+            int labID = rqptr->getLabId();
+            int instID = rqptr->getInstructorId();
+            int weekNo = rqptr->getWeekNumber();
+            int approvedInt = rqptr->getIsApproved() ? 1 : 0;
+            pout.write(reinterpret_cast<char*>(&labID), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&instID), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&weekNo), sizeof(int));
+            pout.write(reinterpret_cast<char*>(&approvedInt), sizeof(int));
+            int len = (int)rqptr->getReason().size();
+            pout.write(reinterpret_cast<char*>(&len), sizeof(int));
+            if (len > 0) pout.write(rqptr->getReason().data(), len);
+        }
+        pout.close();
+        cout << "Saved " << count << " pending request(s) to pendingRequest.dat" << endl;
+    }
 }
+
+Instructor* LabManagementSystem::findInstructorById(int id) const {
+    for (const auto &instr : m_instructors) {
+        if (instr && instr->getId() == id) {
+            return instr.get();
+        }
+    }
+    return nullptr;
+}
+
+void LabManagementSystem::run() {
+    cout << "\n========================================" << endl;
+    cout << "       Lab Management System - Run" << endl;
+    cout << "========================================\n" << endl;
+
+    // Display pending requests at start
+    cout << "--- Current Pending Requests ---" << endl;
+    if (m_requests.empty()) {
+        cout << "No pending requests." << endl;
+    } else {
+        for (size_t i = 0; i < m_requests.size(); ++i) {
+            const auto& req = m_requests[i];
+            cout << i + 1 << ". Lab ID: " << req->getLabId() 
+                 << " | Instructor ID: " << req->getInstructorId()
+                 << " | Day: " << req->getWeekNumber()
+                 << " | Reason: " << req->getReason()
+                 << " | Approved: " << (req->getIsApproved() ? "Yes" : "No") << endl;
+        }
+    }
+    cout << "\n--- Submit New Request ---\n" << endl;
+
+    // Ask for instructor ID
+    int instructorId = 0;
+    Instructor* instructor = nullptr;
+    
+    while (!instructor) {
+        cout << "Enter Instructor ID: ";
+        cin >> instructorId;
+        cin.ignore(); // Clear newline from input buffer
+        
+        instructor = findInstructorById(instructorId);
+        if (!instructor) {
+            cout << "ERROR: Instructor with ID " << instructorId << " not found. Please try again.\n" << endl;
+        }
+    }
+
+    // Display welcome message
+    cout << "\nWelcome " << instructor->getName() << "!\n" << endl;
+
+    // Display assigned lab sections
+    vector<int> assignedLabIds = instructor->getAssignedLabIds();
+    vector<pair<int, int>> availableSections; // (section ID, lab ID)
+    
+    cout << "--- Your Assigned Lab Sections ---" << endl;
+    
+    // Find all lab sections where this instructor is the instructor
+    int sectionIndex = 1;
+    for (const auto& lab : m_labs) {
+        const auto& sections = lab->getSections();
+        for (const auto& section : sections) {
+            if (section->getInstructorID() == instructorId) {
+                cout << sectionIndex << ". Lab: " << lab->getName() 
+                     << " (ID: " << lab->getID() << ")"
+                     << " | Section: " << section->getSectionID()
+                     << " | Course: " << section->getCourseCode() << endl;
+                availableSections.push_back({section->getSectionID(), lab->getID()});
+                sectionIndex++;
+            }
+        }
+    }
+
+    if (availableSections.empty()) {
+        cout << "You have no assigned lab sections." << endl;
+        return;
+    }
+
+    // Ask for lab section selection
+    cout << "\nSelect a Lab Section (enter number): ";
+    int sectionChoice = 0;
+    cin >> sectionChoice;
+    cin.ignore();
+
+    if (sectionChoice < 1 || sectionChoice > (int)availableSections.size()) {
+        cout << "ERROR: Invalid selection." << endl;
+        return;
+    }
+
+    int selectedSectionId = availableSections[sectionChoice - 1].first;
+    int selectedLabId = availableSections[sectionChoice - 1].second;
+
+    // Ask for Day Number
+    cout << "Enter Day Number (1=Monday, 2=Tuesday, ..., 7=Sunday): ";
+    int dayNumber = 0;
+    cin >> dayNumber;
+    cin.ignore();
+
+    if (dayNumber < 1 || dayNumber > 7) {
+        cout << "ERROR: Invalid day number. Please use 1-7." << endl;
+        return;
+    }
+
+    // Ask for Reason
+    cout << "Enter Reason for Request: ";
+    string reason;
+    getline(cin, reason);
+
+    // Submit the request (using dayNumber as weekNumber parameter for compatibility)
+    cout << "\nSubmitting request...\n" << endl;
+    InstructorRequest* newRequest = submitInstructorRequest(instructorId, selectedLabId, dayNumber, reason);
+
+    // Display the submitted request
+    if (newRequest) {
+        const char* dayNames[] = {"", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        cout << "========== Request Submitted ===========" << endl;
+        cout << "Instructor ID: " << newRequest->getInstructorId() << endl;
+        cout << "Instructor Name: " << instructor->getName() << endl;
+        cout << "Lab Section ID: " << selectedSectionId << endl;
+        cout << "Lab ID: " << newRequest->getLabId() << endl;
+        cout << "Day: " << dayNames[dayNumber] << " (" << dayNumber << ")" << endl;
+        cout << "Reason: " << newRequest->getReason() << endl;
+        cout << "Status: " << (newRequest->getIsApproved() ? "Approved" : "Pending") << endl;
+        cout << "========================================\n" << endl;
+    } else {
+        cout << "ERROR: Failed to submit request.\n" << endl;
+    }
+}
+
